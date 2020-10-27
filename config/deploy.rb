@@ -4,7 +4,7 @@ set :application, 'redmine'
 set :repo_url, 'git@github.com:semetrical-org/redmine.git'
 
 set :linked_files, %w[.env config/puma.rb]
-set :linked_dirs, %w[log tmp/pids tmp/cache tmp/sockets vendor/bundle node_modules]
+set :linked_dirs, %w[log files tmp/pids tmp/cache tmp/sockets vendor/bundle]
 set :format, :pretty
 set :log_level, :info # :debug :error :info
 
@@ -24,6 +24,6 @@ set :foreman_systemd_user, 'deploy'
 set :maintenance_timeout, 10
 
 before 'deploy', 'maintenance:enable'
-# after 'deploy', 'foreman_systemd:stop'
+after 'deploy', 'foreman_systemd:stop'
 after 'deploy', 'foreman_systemd:setup'
 after 'deploy', 'maintenance:disable'
