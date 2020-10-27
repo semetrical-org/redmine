@@ -26,6 +26,10 @@ gem 'tzinfo-data', platforms: [:mingw, :x64_mingw, :mswin]
 gem 'rotp'
 gem 'rqrcode'
 
+# Configuration
+gem 'dotenv-rails'
+gem 'foreman', '~> 0.87.2'
+
 # Optional gem for LDAP authentication
 group :ldap do
   gem "net-ldap", "~> 0.16.0"
@@ -80,6 +84,14 @@ end
 
 group :development do
   gem "yard"
+
+  gem 'capistrano', '~> 3.7', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-foreman-systemd', git: 'git@github.com:semetrical-org/capistrano-foreman-systemd.git'
+  gem 'capistrano-maintenance', '~> 1.2', require: false
+  gem 'capistrano-nvm', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rvm', require: false
 end
 
 group :test do
