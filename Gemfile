@@ -29,6 +29,7 @@ gem 'rqrcode'
 # Configuration
 gem 'dotenv-rails'
 gem 'foreman', '~> 0.87.2'
+gem 'puma', '~> 5.0.2'
 
 # Optional gem for LDAP authentication
 group :ldap do
@@ -100,7 +101,6 @@ group :test do
   gem 'simplecov', '~> 0.18.5', :require => false
   gem "ffi", platforms: [:mingw, :x64_mingw, :mswin]
   # For running system tests
-  gem 'puma'
   gem 'capybara', '~> 3.31.0'
   gem "selenium-webdriver"
   # RuboCop
