@@ -15,7 +15,7 @@ div#wrapper, div#wrapper2, div#wrapper3 { min-height: inherit; }
 #wrapper {background: white;overflow: hidden;}
 #wrapper3 { display: flex; flex-direction: column; }
 
-#top-menu {background: #4f7496; color: #fff; font-size: 1em; padding: 10px 0px 10px 12px;}
+#top-menu {background: #4f7496; color: #fff; font-size: 1em; padding: 10px 0px 10px 16px;}
 #top-menu ul {margin: 0;  padding: 0;}
 #top-menu li {
   float:left;
@@ -43,7 +43,7 @@ div#wrapper, div#wrapper2, div#wrapper3 { min-height: inherit; }
 #main-menu li {
   float:none;
   list-style-type:none;
-  margin: 0px 2px 0px 0px;
+  margin: 0px 3px 0px 0px;
   padding: 0px 0px 0px 0px;
   white-space:nowrap;
   display:inline-block;
