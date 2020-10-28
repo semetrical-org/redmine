@@ -9,11 +9,11 @@ default: &default
 
 development:
   <<: *default
-  database: <%= ENV.fetch('POSTGRES_DB', 'flexioffices_development') %>
+  database: <%= ENV.fetch('POSTGRES_DB', 'redmine_development') %>
 
 test:
   <<: *default
-  database: <%= ENV.fetch('POSTGRES_DB', 'flexioffices_test') %>
+  database: <%= ENV.fetch('POSTGRES_DB', 'redmine_test') %>
 
 staging:
   <<: *default
