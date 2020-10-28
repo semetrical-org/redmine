@@ -27,7 +27,7 @@ login_required:
   default: 1
   security_notifications: 1
 self_registration:
-  default: '2'
+  default: '0'
   security_notifications: 1
 show_custom_fields_on_registration:
   default: 1
