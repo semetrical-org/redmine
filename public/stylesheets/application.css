@@ -864,6 +864,7 @@ input#months { width: 46px; }
 .jstBlock .jstTabs, .jstBlock .wiki-preview { width: 99%; }
 
 .jstBlock .jstTabs { padding-right: 6px; }
+.jstBlock .jstTabs .tab-edit, .jstBlock .jstTabs .tab-preview { width: 50px; text-align: center }
 .jstBlock .wiki-preview { padding: 2px; }
 .jstBlock .wiki-preview p:first-child { padding-top: 0 !important; margin-top: 0 !important;}
 .jstBlock .wiki-preview p:last-child { padding-bottom: 0 !important; margin-bottom: 0 !important;}
