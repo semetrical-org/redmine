@@ -288,32 +288,6 @@ Redmine::MenuManager.map :admin_menu do |menu|
 end
 
 Redmine::MenuManager.map :project_menu do |menu|
-  menu.push :new_object, nil, :caption => ' + ',
-            :if => Proc.new { |p| Setting.new_item_menu_tab == '2' },
-            :html => { :id => 'new-object', :onclick => 'toggleNewObjectDropdown(); return false;' }
-  menu.push :new_issue_sub,
-            { :controller => 'issues', :action => 'new', :copy_from => nil },
-            :param => :project_id, :caption => :label_issue_new,
-            :html => { :accesskey => Redmine::AccessKeys.key_for(:new_issue) },
-            :if => Proc.new { |p| Issue.allowed_target_trackers(p).any? },
-            :permission => :add_issues,
-            :parent => :new_object
-  menu.push :new_issue_category, {:controller => 'issue_categories', :action => 'new'},
-            :param => :project_id, :caption => :label_issue_category_new,
-            :parent => :new_object
-  menu.push :new_version, {:controller => 'versions', :action => 'new'}, :param => :project_id, :caption => :label_version_new,
-            :parent => :new_object
-  menu.push :new_timelog, {:controller => 'timelog', :action => 'new'}, :param => :project_id, :caption => :button_log_time,
-            :parent => :new_object
-  menu.push :new_news, {:controller => 'news', :action => 'new'}, :param => :project_id, :caption => :label_news_new,
-            :parent => :new_object
-  menu.push :new_document, {:controller => 'documents', :action => 'new'}, :param => :project_id, :caption => :label_document_new,
-            :parent => :new_object
-  menu.push :new_wiki_page, {:controller => 'wiki', :action => 'new'}, :param => :project_id, :caption => :label_wiki_page_new,
-            :parent => :new_object
-  menu.push :new_file, {:controller => 'files', :action => 'new'}, :param => :project_id, :caption => :label_attachment_new,
-            :parent => :new_object
-
   menu.push :overview, {:controller => 'projects', :action => 'show'}
   menu.push :activity, {:controller => 'activities', :action => 'index'}
   menu.push :roadmap, {:controller => 'versions', :action => 'index'}, :param => :project_id,
@@ -347,8 +321,33 @@ Redmine::MenuManager.map :project_menu do |menu|
             {:controller => 'repositories', :action => 'show',
              :repository_id => nil, :path => nil, :rev => nil},
             :if => Proc.new {|p| p.repository && !p.repository.new_record?}
-  menu.push :settings, {:controller => 'projects', :action => 'settings'},
+  menu.push :settings, {:controller => 'projects', :action => 'settings'}
+  menu.push :new_object, nil, :caption => ' + ',
+            :if => Proc.new { |p| Setting.new_item_menu_tab == '2' },
+            :html => { :id => 'new-object', :onclick => 'toggleNewObjectDropdown(); return false;' }
+  menu.push :new_issue_sub,
+            { :controller => 'issues', :action => 'new', :copy_from => nil },
+            :param => :project_id, :caption => :label_issue_new,
+            :html => { :accesskey => Redmine::AccessKeys.key_for(:new_issue) },
+            :if => Proc.new { |p| Issue.allowed_target_trackers(p).any? },
+            :permission => :add_issues,
+            :parent => :new_object,
             :last => true
+  menu.push :new_issue_category, {:controller => 'issue_categories', :action => 'new'},
+            :param => :project_id, :caption => :label_issue_category_new,
+            :parent => :new_object
+  menu.push :new_version, {:controller => 'versions', :action => 'new'}, :param => :project_id, :caption => :label_version_new,
+            :parent => :new_object
+  menu.push :new_timelog, {:controller => 'timelog', :action => 'new'}, :param => :project_id, :caption => :button_log_time,
+            :parent => :new_object
+  menu.push :new_news, {:controller => 'news', :action => 'new'}, :param => :project_id, :caption => :label_news_new,
+            :parent => :new_object
+  menu.push :new_document, {:controller => 'documents', :action => 'new'}, :param => :project_id, :caption => :label_document_new,
+            :parent => :new_object
+  menu.push :new_wiki_page, {:controller => 'wiki', :action => 'new'}, :param => :project_id, :caption => :label_wiki_page_new,
+            :parent => :new_object
+  menu.push :new_file, {:controller => 'files', :action => 'new'}, :param => :project_id, :caption => :label_attachment_new,
+            :parent => :new_object
 end
 
 Redmine::Activity.map do |activity|
