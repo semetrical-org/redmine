@@ -72,7 +72,7 @@ session_timeout:
   security_notifications: 1
 attachment_max_size:
   format: int
-  default: 51200
+  default: 512000
 bulk_download_max_size:
   format: int
   default: 102400
