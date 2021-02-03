@@ -28,6 +28,6 @@ set :foreman_systemd_user, 'deploy'
 set :maintenance_timeout, 10
 
 before 'deploy', 'maintenance:enable'
-# after 'deploy', 'foreman_systemd:stop'
+after 'deploy', 'foreman_systemd:stop'
 after 'deploy', 'foreman_systemd:setup'
 after 'deploy', 'maintenance:disable'
