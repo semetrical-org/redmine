@@ -1,6 +1,6 @@
 <form id="calendar_filter">
 <fieldset id="filters" class="collapsible  collapsed" style="padding-bottom: 20px;">
-  <legend onclick="toggleFieldset(this);"><%= translate 'description_filter' %></legend>
+  <legend onclick="toggleFieldset(this);" class="icon icon-collapsed" ><%= translate 'description_filter' %></legend>
   <div style="display: none;">
     <table>
     <% $mc_filters.keys.each do |filter_name|%>
@@ -22,11 +22,12 @@
         <td style="padding-left: 10px;">
           <% if filter[:type] == 'lookup' %>
             <% lookup_items = eval(filter[:lookup_query]+".collect {|x| [x."+filter[:lookup_id]+",x."+filter[:lookup_value]+"]}") %>
-            <select style="width: 200px;" id="filter_id_<%= filter_name %>_value" name="filter[<%= filter_name %>][value][]" data-sel="filter_value_select" multiple>
+            <select style="width: 200px;" id="filter_id_<%= filter_name %>_value" name="filter[<%= filter_name %>][value][]" data-sel="filter_value_select">
               <% lookup_items.each do |item| %>
                 <option value="<%= item[0] %>"><%= item[1] %></option>
               <% end %>
             </select>
+            <span class="toggle-multiselect icon-only icon-toggle-plus">&nbsp;</span>
           <% end %>
         </td>
       </tr>
