@@ -84,7 +84,8 @@ else
 end
 
 group :development do
-  gem "yard"
+  gem 'yard'
+  gem 'pry-byebug'
 
   gem 'capistrano', '~> 3.7', require: false
   gem 'capistrano-bundler', require: false

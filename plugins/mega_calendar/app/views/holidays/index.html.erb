@@ -1,0 +1,55 @@
+<style>
+  .h-table {
+    width: 100%;
+  }
+
+  .h-head {
+    font-weight: bold;
+  }
+
+  .h-head td {
+    border-bottom: 1px solid #dddddd;
+  }
+
+  .h-body tr:first-child td {
+    padding-top: 15px;
+  }
+
+  .h-paginate {
+    padding-top: 15px;
+  }
+</style>
+
+<h1><%= translate 'holidays' %></h1>
+
+<table class="h-table">
+  <thead class="h-head">
+    <tr>
+      <td><%= translate 'user'%></td>
+      <td><%= translate 'start' %></td>
+      <td><%= translate 'end' %></td>
+      <td><%= translate 'action' %></td>
+    </tr>
+  </thead>
+  <tbody class="h-body">
+    <% @res.each do |row| %>
+      <tr>
+        <td><%= row.user.blank? ? '' : row.user.login.to_s %></td>
+        <td><%= row.start.blank? ? '' : format_date(row.start.to_date) %></td>
+        <td><%= row.end.blank? ? '' : format_date(row.end.to_date) %></td>
+        <td><a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/show?id=<%= row.id.to_s %>"><%= translate 'show' %></a>&nbsp;<a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/destroy?id=<%= row.id.to_s %>"><%= translate 'destroy' %></a></td>
+      </tr>
+    <% end %>
+    <% if @pagination == true %>
+      <tr class="h-paginate">
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/index?page=<%= @last_page.to_s %>"><%= translate 'prev' %></a>&nbsp;<a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/index?page=<%= @new_page.to_s %>"><%= translate 'next' %></a></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+<a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/new"><%= translate 'new' %></a>
