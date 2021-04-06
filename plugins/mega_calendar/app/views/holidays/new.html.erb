@@ -1,3 +1,9 @@
+<style>
+  #holiday_user_id, #holiday_start, #holiday_end {
+    min-width: 250px;
+  }
+</style>
+
 <link rel='stylesheet' href='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/datetimepicker/jquery.datetimepicker.css' />
 <script src='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/datetimepicker/build/jquery.datetimepicker.full.min.js'></script>
 
@@ -10,7 +16,7 @@
     <tr>
       <td><label><%= translate 'user' %></label></td>
       <td>
-        <select name="holiday[user_id]">
+        <select name="holiday[user_id]" id="holiday_user_id">
             <option value=""><%= translate 'select_default' %></option>
           <% Holiday.get_activated_users.each do |u| %>
             <option value="<%= u.id.to_s %>"><%= u.login.to_s %></option>
@@ -20,14 +26,15 @@
     </tr>
     <tr>
       <td><label><%= translate 'start' %></label></td>
-      <td><input type="text" id="holiday_start" name="holiday[start]" /></td>
+      <td><input type="text" id="holiday_start" name="holiday[start]" autocomplete="off" /></td>
     </tr>
     <tr>
       <td><label><%= translate 'end' %></label></td>
-      <td><input type="text" id="holiday_end" name="holiday[end]" /></td>
+      <td><input type="text" id="holiday_end" name="holiday[end]" autocomplete="off" /></td>
     </tr>
   </table>
-<input type="submit" value="<%= translate 'save' %>" />
+  <br/>
+  <input type="submit" value="<%= translate 'save' %>" />
 </form>
 
 <%

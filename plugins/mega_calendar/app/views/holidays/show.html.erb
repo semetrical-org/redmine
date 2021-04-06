@@ -1,8 +1,19 @@
+<style>
+  .h-table {
+    width: 300px;
+  }
+
+  .h-body tr td:first-child{
+    font-weight: bold;
+  }
+</style>
+
 <h1><%= translate 'holiday' %></h1>
 <%
   user = @holiday.user.login rescue ''
 %>
-  <table>
+<table class="h-table">
+  <tbody class="h-body">
     <tr>
       <td><label><%= translate 'user' %></label></td>
       <td><%= user %></td>
@@ -15,7 +26,9 @@
       <td><label><%= translate 'end' %></label></td>
       <td><%= @holiday.end.blank? ? '' : format_date(@holiday.end.to_date) %></td>
     </tr>
-  </table>
+  </tbody>
+</table>
+<br/>
 <a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/edit?id=<%= @holiday.id.to_s %>"><%= translate 'edit' %></a>
 <a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/destroy?id=<%= @holiday.id.to_s %>"><%= translate 'destroy' %></a>
 <a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/index"><%= translate 'list' %></a>
