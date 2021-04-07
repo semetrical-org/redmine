@@ -12,34 +12,38 @@ class HolidaysController < ApplicationController
   end
 
   def index
-    limit = 20
-    offset = 0
-    @new_page = 1
-    @last_page = 0
-    if !params[:page].blank? && params[:page].to_i >= 1
-      offset = params[:page].to_i * limit
-      @new_page = params[:page].to_i + 1
-      @last_page = params[:page].to_i - 1
+    @toolbar_params = params.permit(:my, :grouped).select {|_, v| v.present? }
+
+    scope = Holiday.includes(:user).order(start: :desc)
+    scope = scope.where(user: User.current) if params[:my]
+
+    if params[:grouped]
+      @holidays = Holiday.grouped_holidays_by_user(scope)
+                         .transform_values do |holidays|
+
+        Holiday.grouped_holidays_by_year(holidays)
+               .transform_keys(&:to_i)
+               .transform_values(&:size)
+      end
+
+      @users = @holidays.keys.sort_by(&:login)
+      @years = @holidays.values.map(&:keys).flatten.sort.uniq
+    else
+
+      @holidays_pages = Paginator.new(scope.count, per_page_option, params['page'])
+      @holidays = scope.limit(@holidays_pages.per_page)
+                       .offset(@holidays_pages.offset)
     end
-    @res = Holiday.order(:start).limit(limit).offset(offset)
-    @pagination = (Holiday.count.to_f / 20.to_f) > 1.to_f
   end
 
   def new
     #DO NOTHING
   end
 
-  def show
-    @holiday = Holiday.where(:id => params[:id]).first rescue nil
-    if @holiday.blank?
-      redirect_to(:controller => 'holidays', :action => 'index')
-    end
-  end
-
   def create
     @holiday = Holiday.new(holiday_params)
     if @holiday.save
-      redirect_to(:controller => 'holidays', :action => 'show', :id => @holiday.id)
+      redirect_to(:controller => 'holidays', :action => 'index')
     else
       respond_to do |format|
         format.html { render :action => 'new' }
@@ -59,7 +63,7 @@ class HolidaysController < ApplicationController
     @holiday = Holiday.find(params[:holiday][:id]) rescue nil
     @holiday.assign_attributes(holiday_params)
     if @holiday.save
-      redirect_to(:controller => 'holidays', :action => 'show', :id => @holiday.id)
+      redirect_to(:controller => 'holidays', :action => 'index')
     else
       respond_to do |format|
         format.html { render :action => 'new' }

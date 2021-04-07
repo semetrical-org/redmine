@@ -1,30 +1,47 @@
 class Holiday < ActiveRecord::Base
   unloadable
-  belongs_to(:user)
-  validates :start, :date => true
-  validates :end, :date => true
-  validates_presence_of :start, :end
+  belongs_to :user
+
+  with_options presence: true, date: true do
+    validates :start
+    validates :end
+  end
   validate :validate_holiday
 
   def validate_holiday
-    if self.start && self.end && (start_changed? || end_changed?) && self.end < self.start
-      errors.add :end, :greater_than_start
+    errors.add(:end, :greater_than_start) if self.start && self.end && (self.end < self.start)
+  end
+
+  def each_days(&block)
+    (self.start.to_date..self.end.to_date).each(&block)
+  end
+
+  def self.grouped_holidays_by_user(holidays)
+    holidays.group_by(&:user)
+  end
+
+  def self.grouped_holidays_by_year(holidays)
+    holidays.each_with_object({}) do |holiday, result|
+      holiday.each_days do |day|
+        result[day.year] ||= []
+        result[day.year] << day
+      end
     end
   end
 
   def self.get_activated_users
     if Setting.plugin_mega_calendar['displayed_type'] == 'users'
-      return User.where(["users.id IN (?) AND users.login IS NOT NULL AND users.login <> ''",Setting.plugin_mega_calendar['displayed_users']]).order("users.login ASC")
+      User.where("users.id IN (?) AND users.login IS NOT NULL AND users.login <> ''", Setting.plugin_mega_calendar['displayed_users']).order('users.login ASC')
     else
-      return User.where(["users.id IN (SELECT user_id FROM groups_users WHERE group_id IN (?)) AND users.login IS NOT NULL AND users.login <> ''",Setting.plugin_mega_calendar['displayed_users']]).order("users.login ASC")
+      User.where("users.id IN (SELECT user_id FROM groups_users WHERE group_id IN (?)) AND users.login IS NOT NULL AND users.login <> ''", Setting.plugin_mega_calendar['displayed_users']).order('users.login ASC')
     end
   end
 
   def self.get_activated_groups
     if Setting.plugin_mega_calendar['displayed_type'] != 'users'
-      return Group.where(["users.id IN (?)",Setting.plugin_mega_calendar['displayed_users']]).order("users.lastname ASC")
+      Group.where('users.id IN (?)', Setting.plugin_mega_calendar['displayed_users']).order('users.lastname ASC')
     else
-      return Group.all.order("users.lastname ASC")
+      Group.order('users.lastname ASC')
     end
   end
 end

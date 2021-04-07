@@ -1,3 +1,6 @@
+<link rel='stylesheet' href='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/fullcalendar/fullcalendar.css' />
+<link rel='stylesheet' href='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/qtip2/jquery.qtip.min.css' />
+
 <style>
   .h-table {
     width: 100%;
@@ -18,38 +21,51 @@
   .h-paginate {
     padding-top: 15px;
   }
+
+  .fc a {
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    box-sizing: border-box;
+    margin: 0;
+    height: 2.1em;
+    padding: 0.3em .6em;
+    font-size: 1em;
+    white-space: nowrap;
+    cursor: pointer;
+    color: #333333;
+  }
+
+  .fc a:hover {
+    text-decoration: none;
+  }
 </style>
 
-<h1><%= translate 'holidays' %></h1>
+<div class="contextual">
+  <a class="icon icon-add new-holiday" href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/new">New holiday</a>
+</div>
 
-<table class="h-table">
-  <thead class="h-head">
-    <tr>
-      <td><%= translate 'user'%></td>
-      <td><%= translate 'start' %></td>
-      <td><%= translate 'end' %></td>
-      <td><%= translate 'action' %></td>
-    </tr>
-  </thead>
-  <tbody class="h-body">
-    <% @res.each do |row| %>
-      <tr>
-        <td><%= row.user.blank? ? '' : row.user.login.to_s %></td>
-        <td><%= row.start.blank? ? '' : format_date(row.start.to_date) %></td>
-        <td><%= row.end.blank? ? '' : format_date(row.end.to_date) %></td>
-        <td><a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/show?id=<%= row.id.to_s %>"><%= translate 'show' %></a>&nbsp;<a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/destroy?id=<%= row.id.to_s %>"><%= translate 'destroy' %></a></td>
-      </tr>
-    <% end %>
-    <% if @pagination == true %>
-      <tr class="h-paginate">
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td><a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/index?page=<%= @last_page.to_s %>"><%= translate 'prev' %></a>&nbsp;<a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/index?page=<%= @new_page.to_s %>"><%= translate 'next' %></a></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<br>
-<a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/new"><%= translate 'new' %></a>
+<h2><%= translate 'holidays' %></h2>
+
+<div class="fc" style="height: 40px;">
+  <div class="fc-toolbar">
+    <div class="fc-left">
+      <div class="fc-button-group">
+        <a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays?<%= @toolbar_params.except(:my).to_query %>" class="fc-button fc-state-default fc-corner-left <%= 'fc-state-active' unless params.key?(:my) %>">All holidays</a>
+        <a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays?<%= @toolbar_params.merge(my: true).to_query %>" class="fc-button fc-state-default fc-corner-left <%= 'fc-state-active' if params.key?(:my) %>">My holidays</a>
+      </div>
+    </div>
+
+    <div class="fc-right">
+      <div class="fc-button-group">
+        <a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays?<%= @toolbar_params.except(:grouped).to_query %>" class="fc-button fc-state-default fc-corner-left <%= 'fc-state-active' unless params.key?(:grouped) %>">List</a>
+        <a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays?<%= @toolbar_params.merge(grouped: true).to_query %>" class="fc-button fc-state-default fc-corner-right <%= 'fc-state-active' if params.key?(:grouped) %>">Groups by years</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if params[:grouped] %>
+  <%= render 'holidays/groups' %>
+<% else %>
+  <%= render 'holidays/list' %>
+<% end %>
