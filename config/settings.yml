@@ -249,6 +249,13 @@ project_list_defaults:
     - name
     - identifier
     - short_description
+holiday_list_defaults:
+  serialized: true
+  default:
+    column_names:
+    - user_id
+    - start
+    - end
 issue_done_ratio:
   default: 'issue_field'
 default_projects_public:

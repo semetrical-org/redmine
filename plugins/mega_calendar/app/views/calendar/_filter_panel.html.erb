@@ -33,9 +33,10 @@
       </tr>
     <% end %>
     </table>
+    <br/>
     <a href="#" class="icon icon-checked" onclick="$('#calendar').fullCalendar( 'refetchEvents' );"><%= translate 'button_apply' %></a> &nbsp; <a href="#" class="icon icon-reload" onclick="reset_and_reload_filters();"><%= translate 'button_reset' %></a>
     <div>
-      <hr>
+      <hr style="margin-top: 15px;">
       <table>
         <tr>
           <td><%= translate 'filter_name' %></td>
@@ -46,8 +47,9 @@
           <td style="padding-left: 10px;"><input type="checkbox" id="inp_filter_global" name="filter_global" /></td>
         </tr>
       </table>
+      <br/>
       <a href="#" class="icon icon-save" onclick="save_filters();"><%= translate 'button_save' %></a>
-      <hr>
+      <hr style="margin-top: 15px;">
       <table>
         <tr>
           <td><%= translate 'use_saved_filter' %></td>
@@ -61,6 +63,7 @@
           </td>
         </tr>
       </table>
+      <br/>
       <a href="#" class="icon icon-checked" onclick="use_saved_filter($('#sel_saved_filter').val());"><%= translate 'button_update' %></a>&nbsp;<a href="#" class="icon icon-del" onclick="window.location = '<%= Setting.plugin_mega_calendar['sub_path'] %>calendar/destroy_filter?id='+$('#sel_saved_filter').val();"><%= translate 'button_delete' %></a>
     </div>
   </div>

@@ -1,6 +1,9 @@
 class HolidaysController < ApplicationController
   unloadable
-  
+
+  helper :queries
+  include QueriesHelper
+
   before_action(:check_plugin_right)
   
   def check_plugin_right
@@ -12,12 +15,10 @@ class HolidaysController < ApplicationController
   end
 
   def index
-    @toolbar_params = params.permit(:my, :grouped).select {|_, v| v.present? }
+    retrieve_holiday_query
+    scope = holiday_scope
 
-    scope = Holiday.includes(:user).order(start: :desc)
-    scope = scope.where(user: User.current) if params[:my]
-
-    if params[:grouped]
+    if params.key?(:grouped)
       @holidays = Holiday.grouped_holidays_by_user(scope)
                          .transform_values do |holidays|
 
@@ -83,4 +84,15 @@ class HolidaysController < ApplicationController
   def holiday_params
     params.require(:holiday).permit(:start, :end, :user_id)
   end
+
+  def holiday_scope(options={})
+    scope = @query.results_scope(options)
+    scope = scope.where(user: User.current) if params.key?(:my)
+    scope
+  end
+
+  def retrieve_holiday_query
+    retrieve_query(HolidayQuery, false, :defaults => @default_columns_names)
+  end
+
 end

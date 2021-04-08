@@ -166,6 +166,10 @@ class QueriesController < ApplicationController
     redirect_to projects_path(options)
   end
 
+  def redirect_to_holiday_query(options)
+    redirect_to "#{Setting.plugin_mega_calendar['sub_path']}holidays"
+  end
+
   # Returns the Query subclass, IssueQuery by default
   # for compatibility with previous behaviour
   def query_class
