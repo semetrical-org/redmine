@@ -17,17 +17,17 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-if ENV["COVERAGE"]
+if ENV['COVERAGE']
   require 'simplecov'
-  require File.expand_path(File.dirname(__FILE__) + "/coverage/html_formatter")
+  require File.expand_path(File.dirname(__FILE__) + '/coverage/html_formatter')
   SimpleCov.formatter = Redmine::Coverage::HtmlFormatter
   SimpleCov.start 'rails'
 end
 
 $redmine_test_ldap_server = ENV['REDMINE_TEST_LDAP_SERVER'] || '127.0.0.1'
 
-ENV["RAILS_ENV"] = "test"
-require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
+ENV['RAILS_ENV'] = 'test'
+require File.expand_path(File.dirname(__FILE__) + '/../config/environment')
 require 'rails/test_help'
 require Rails.root.join('test', 'mocks', 'open_id_authentication_mock.rb').to_s
 
