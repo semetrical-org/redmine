@@ -97,6 +97,8 @@ group :development do
 end
 
 group :test do
+  gem 'brakeman'
+  gem 'bundle-audit'
   gem 'rails-dom-testing'
   gem 'mocha', '>= 1.4.0'
   gem 'simplecov', '~> 0.21.2', :require => false
