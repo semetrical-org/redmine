@@ -104,6 +104,7 @@ group :test do
   gem 'simplecov', '~> 0.21.2', :require => false
   gem 'ffi', platforms: [:mingw, :x64_mingw, :mswin]
   gem 'minitest-junit'
+  gem 'minitest-reporters'
   # For running system tests
   gem 'capybara', '~> 3.31.0'
   gem 'selenium-webdriver'

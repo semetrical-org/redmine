@@ -22,6 +22,9 @@ if ENV['COVERAGE']
   # require File.expand_path(File.dirname(__FILE__) + '/coverage/html_formatter')
   # SimpleCov.formatter = Redmine::Coverage::HtmlFormatter
   SimpleCov.start 'rails'
+
+  require 'minitest/reporters'
+  Minitest::Reporters.use!([Minitest::Reporters::SpecReporter.new, Minitest::Reporters::JUnitReporter.new])
 end
 
 $redmine_test_ldap_server = ENV['REDMINE_TEST_LDAP_SERVER'] || '127.0.0.1'
