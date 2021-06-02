@@ -12,8 +12,8 @@ class Holiday < ActiveRecord::Base
     errors.add(:end, :greater_than_start) if self.start && self.end && (self.end < self.start)
   end
 
-  def each_days(&block)
-    (self.start.to_date..self.end.to_date).each(&block)
+  def holidays
+    (self.start.to_date..self.end.to_date).select(&:workday?)
   end
 
   def self.grouped_holidays_by_user(holidays)
@@ -22,7 +22,7 @@ class Holiday < ActiveRecord::Base
 
   def self.grouped_holidays_by_year(holidays)
     holidays.each_with_object({}) do |holiday, result|
-      holiday.each_days do |day|
+      holiday.holidays.each do |day|
         result[day.year] ||= []
         result[day.year] << day
       end

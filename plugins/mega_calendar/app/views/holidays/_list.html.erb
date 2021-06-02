@@ -4,6 +4,7 @@
     <td><%= translate 'user'%></td>
     <td><%= translate 'start' %></td>
     <td><%= translate 'end' %></td>
+    <td><%= translate 'count' %></td>
     <td><%= translate 'action' %></td>
   </tr>
   </thead>
@@ -13,6 +14,7 @@
       <td><%= row.user.blank? ? '' : row.user.login.to_s %></td>
       <td><%= row.start.blank? ? '' : format_date(row.start.to_date) %></td>
       <td><%= row.end.blank? ? '' : format_date(row.end.to_date) %></td>
+      <td><%= row.holidays.count %></td>
       <td>
         <a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/edit?id=<%= row.id.to_s %>"><%= translate 'edit' %></a>
         &nbsp;

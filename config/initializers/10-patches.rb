@@ -213,3 +213,15 @@ module ActionView
     end
   end
 end
+
+module Workday
+  def holiday?
+    saturday? || sunday?
+  end
+
+  def workday?
+    !holiday?
+  end
+end
+Date.include(Workday)
+Time.include(Workday)
